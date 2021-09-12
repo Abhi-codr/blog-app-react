@@ -1,15 +1,14 @@
-import axios from "axios";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import blogsData from "../data/blogs";
+import axiosInstance from "../helpers/axiosInstance";
 
 const HomePage = () => {
-  const [blogs, setBlogs] = useState(blogsData);
+  const [blogs, setBlogs] = useState([]);
   const getBlogs = async () => {
     const {
       data: { data },
-    } = await axios.get("http://localhost:5000/posts");
+    } = await axiosInstance.get("/posts");
     console.log(data);
     setBlogs(data);
   };
@@ -27,7 +26,7 @@ const HomePage = () => {
       >
         Blogs
       </h1>
-      {blogs.length > 0 &&
+      {blogs.length > 0 ? (
         blogs.map((el) => (
           <Link
             style={{
@@ -47,7 +46,7 @@ const HomePage = () => {
             >
               <h2>{el.title}</h2>
               <h4 style={{ margin: "10px 0 0 0 " }}>
-                {moment(el.date).format("DD/MM/YYYY ")}
+                {moment(el.date).format("DD/MM/YYYY")}
               </h4>
               <p>{el.content}</p>
               <div style={{ textAlign: "right" }}>
@@ -55,7 +54,10 @@ const HomePage = () => {
               </div>
             </div>
           </Link>
-        ))}
+        ))
+      ) : (
+        <h2>Empty</h2>
+      )}
     </div>
   );
 };

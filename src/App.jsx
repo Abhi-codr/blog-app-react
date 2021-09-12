@@ -5,7 +5,7 @@ import HomePage from "./pages/HomePage";
 function App() {
   return (
     <div style={{ position: "relative" }}>
-      <BrowserRouter>
+      <BrowserRouter basename="blog-app-react">
         <div
           style={{
             display: "flex",
