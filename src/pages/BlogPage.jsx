@@ -1,19 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
-import axiosInstance from "../helpers/axiosInstance";
+import Button from "../components/styled/Button";
+import { getPost } from "../store/slices/postSlice";
 
 const BlogPage = () => {
-  const [blog, setBlog] = useState(null);
+  const dispatch = useDispatch();
+  const { post, loading } = useSelector((state) => state.posts);
   const param = useParams();
-  const getBlogs = async () => {
-    const {
-      data: { data },
-    } = await axiosInstance.get(`/posts/${param.id}`);
-    setBlog(data);
+  const getBlog = async () => {
+    dispatch(getPost(param.id));
   };
 
   useEffect(() => {
-    getBlogs();
+    getBlog();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -21,26 +22,33 @@ const BlogPage = () => {
       <div
         style={{
           marginTop: "15px",
+          borderRadius: "7px",
           background: "white",
-          paddingLeft: "40px",
-          paddingRight: "40px",
-          paddingTop: "10px",
-          paddingBottom: "10px",
+          padding: "10px 40px 40px 40px",
           minHeight: "90vh",
           boxShadow: "0 6px 12px rgba(0, 0, 0, 0.5)",
         }}
       >
-        {blog && (
-          <div>
-            <h1 style={{ textTransform: "uppercase" }}>{blog.title}</h1>
-            <img
-              src="https://c4.wallpaperflare.com/wallpaper/826/524/865/3-316-16-9-aspect-ratio-s-sfw-wallpaper-preview.jpg"
-              alt="Loading...."
-              style={{ width: "100%" }}
-              srcset=""
-            />
-            <p>{blog.content}</p>
-          </div>
+        {loading ? (
+          <h2>Loading...</h2>
+        ) : (
+          post && (
+            <div>
+              <h1 style={{ textTransform: "uppercase" }}>{post.title}</h1>
+              <h4 style={{ textTransform: "uppercase" }}>
+                By {post.createdBy.name}
+              </h4>
+              <img
+                src="https://c4.wallpaperflare.com/wallpaper/826/524/865/3-316-16-9-aspect-ratio-s-sfw-wallpaper-preview.jpg"
+                alt="Loading...."
+                style={{ width: "100%" }}
+                srcset=""
+              />
+              <p>{post.content}</p>
+              <Button style={{ float: "right" }}>Edit</Button>
+              <Button style={{ display: "block" }}>Delete</Button>
+            </div>
+          )
         )}
       </div>
     </div>

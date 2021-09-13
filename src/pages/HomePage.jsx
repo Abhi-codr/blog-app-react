@@ -1,19 +1,22 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import BlogComponent from "../components/BlogComponent";
-import axiosInstance from "../helpers/axiosInstance";
+import { getPosts } from "../store/slices/postSlice";
 
 const HomePage = () => {
-  const [blogs, setBlogs] = useState([]);
-  const getBlogs = async () => {
-    const {
-      data: { data },
-    } = await axiosInstance.get("/posts");
-    console.log(data);
-    setBlogs(data);
+  const dispatch = useDispatch();
+  const { loading, posts } = useSelector((state) => state.posts);
+
+  const getBlogs = () => {
+    dispatch(getPosts());
   };
+
   useEffect(() => {
     getBlogs();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
   return (
     <div className="container" style={{ minHeight: "90vh" }}>
       <h1
@@ -26,10 +29,22 @@ const HomePage = () => {
         Blogs
       </h1>
       <div className="row">
-        {blogs.length > 0 ? (
-          blogs.map((el) => <BlogComponent el={el} />)
+        {!loading ? (
+          posts.length > 0 ? (
+            posts.map((el) => <BlogComponent el={el} />)
+          ) : (
+            <h2
+              style={{ color: "white", textShadow: "1px 1.5px rgba(0,0,0,.5)" }}
+            >
+              Empty
+            </h2>
+          )
         ) : (
-          <h2>Empty</h2>
+          <h2
+            style={{ color: "white", textShadow: "1px 1.5px rgba(0,0,0,.5)" }}
+          >
+            Loading....
+          </h2>
         )}
       </div>
     </div>
