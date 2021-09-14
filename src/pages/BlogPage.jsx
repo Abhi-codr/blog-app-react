@@ -18,7 +18,7 @@ const BlogPage = () => {
   }, []);
 
   return (
-    <div className="container">
+    <div>
       <div
         style={{
           marginTop: "15px",
@@ -34,7 +34,9 @@ const BlogPage = () => {
         ) : (
           post && (
             <div>
-              <h1 style={{ textTransform: "uppercase" }}>{post.title}</h1>
+              <h1 style={{ textTransform: "uppercase", color: "#ff416c" }}>
+                {post.title}
+              </h1>
               <h4 style={{ textTransform: "uppercase" }}>
                 By {post.createdBy.name}
               </h4>

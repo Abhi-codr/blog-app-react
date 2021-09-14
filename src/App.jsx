@@ -4,6 +4,7 @@ import "./App.css";
 import Header from "./components/Header";
 import BlogPage from "./pages/BlogPage";
 import HomePage from "./pages/HomePage";
+import LoginPage from "./pages/LoginPage";
 import store from "./store/store";
 
 function App() {
@@ -13,9 +14,12 @@ function App() {
         <BrowserRouter basename="blog-app-react">
           <Header />
           <Switch>
-            <Route exact path="/posts/:id" component={BlogPage} />
-            <Route exact path="/" component={HomePage} />
-            <Redirect from="*" to="/" />
+            <div className="container">
+              <Route exact path="/login" component={LoginPage} />
+              <Route exact path="/posts/:id" component={BlogPage} />
+              <Route exact path="/" component={HomePage} />
+              <Redirect from="*" to="/" />
+            </div>
           </Switch>
           {/* <Footer /> */}
         </BrowserRouter>

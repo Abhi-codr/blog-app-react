@@ -18,12 +18,12 @@ const HomePage = () => {
   }, []);
 
   return (
-    <div className="container" style={{ minHeight: "90vh" }}>
+    <>
       <h1
         style={{
           textAlign: "center",
-          color: "white",
-          textShadow: "1px 1.5px rgba(0,0,0,.5)",
+          color: "#FF416A",
+          textShadow: ".5px 1px rgba(0,0,0,.3)",
         }}
       >
         Blogs
@@ -47,7 +47,7 @@ const HomePage = () => {
           </h2>
         )}
       </div>
-    </div>
+    </>
   );
 };
 

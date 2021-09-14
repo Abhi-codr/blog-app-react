@@ -31,11 +31,11 @@ const BlogComponent = ({ el }) => {
               {moment(el.date).format("DD/MM/YYYY")}
             </h4>
             <p>
-              {el.content.slice(0, 100)}
-              <strong style={{ color: "#FF416A" }}> Read More.</strong>
+              {el.content.slice(0, 100)}...
+              <strong style={{ color: "#FF416A" }}> Read More</strong>
             </p>
             <div style={{ textAlign: "right" }}>
-              <em>-{el.createdBy.name}</em>
+              <em>By {el.createdBy.name}</em>
             </div>
           </div>
         </div>
