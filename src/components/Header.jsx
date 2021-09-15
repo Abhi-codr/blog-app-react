@@ -1,6 +1,9 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { userActions } from "../store/slices/userSlice";
+import Button from "./styled/Button";
 
 const Nav = styled.div`
   display: flex;
@@ -25,7 +28,7 @@ const NavLinksContainer = styled.div`
   display: flex;
   justify-content: space-around;
   align-items: center;
-  width: 20%;
+  width: 50%;
 `;
 
 const NavLink = styled(Link)`
@@ -45,6 +48,11 @@ const NavBrand = styled(Link)`
 `;
 
 const Header = () => {
+  const { user } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+  const onClick = () => {
+    dispatch(userActions.logoutUser());
+  };
   return (
     <Nav>
       <NavContainer className="container">
@@ -53,7 +61,15 @@ const Header = () => {
         </NavBrand>
         <NavLinksContainer>
           <NavLink to="/">Blogs</NavLink>
-          <NavLink to="/login">Login</NavLink>
+          <NavLink to="/posts/new">New Post</NavLink>
+          {user ? (
+            <Button onClick={onClick}>Logout</Button>
+          ) : (
+            <>
+              <NavLink to="/login">Login</NavLink>
+              <NavLink to="/register">Register</NavLink>
+            </>
+          )}
         </NavLinksContainer>
       </NavContainer>
     </Nav>

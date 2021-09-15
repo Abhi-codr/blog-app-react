@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { store } from "react-notifications-component";
 import axiosInstance from "../../helpers/axiosInstance";
 
 const initialState = { posts: [], post: null, loading: false };
@@ -53,4 +54,27 @@ const getPost = (payload) => {
   };
 };
 
-export { postSlice, getPosts, getPost };
+const insertPost = (payload) => {
+  return async (dispatch) => {
+    const {
+      user: { token },
+    } = store.getState().user;
+    dispatch(postActions.setLoading(true));
+    try {
+      const {
+        data: { data },
+      } = await axiosInstance.post(
+        `/posts/`,
+        { ...payload },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      dispatch(postActions.setPost(data));
+    } catch (err) {
+      dispatch(postActions.setPost(null));
+    } finally {
+      dispatch(postActions.setLoading(false));
+    }
+  };
+};
+
+export { postSlice, getPosts, getPost, insertPost };
