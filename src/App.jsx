@@ -23,7 +23,7 @@ function App() {
             <Switch>
               <Route exact path="/login" component={LoginPage} />
               <Route exact path="/register" component={RegisterPage} />
-              <Route exact path="/posts/new" component={NewPostPage} />
+              <Route exact path="/new-post" component={NewPostPage} />
               <Route exact path="/posts/:id" component={BlogPage} />
               <Route exact path="/" component={HomePage} />
               <Redirect exact to="/" />

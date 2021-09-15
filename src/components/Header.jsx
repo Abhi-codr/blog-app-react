@@ -61,7 +61,7 @@ const Header = () => {
         </NavBrand>
         <NavLinksContainer>
           <NavLink to="/">Blogs</NavLink>
-          <NavLink to="/posts/new">New Post</NavLink>
+          <NavLink to="/new-post">New Post</NavLink>
           {user ? (
             <Button onClick={onClick}>Logout</Button>
           ) : (
