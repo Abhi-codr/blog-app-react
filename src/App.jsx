@@ -1,11 +1,11 @@
 import { Provider } from "react-redux";
+import store from "./store/store";
 import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 import "./App.css";
 import Header from "./components/Header";
 import BlogPage from "./pages/BlogPage";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
-import store from "./store/store";
 
 function App() {
   return (
@@ -13,14 +13,14 @@ function App() {
       <div style={{ paddingBottom: "20px" }}>
         <BrowserRouter basename="blog-app-react">
           <Header />
-          <Switch>
-            <div className="container">
+          <div className="container">
+            <Switch>
               <Route exact path="/login" component={LoginPage} />
               <Route exact path="/posts/:id" component={BlogPage} />
               <Route exact path="/" component={HomePage} />
-              <Redirect from="*" to="/" />
-            </div>
-          </Switch>
+              <Redirect exact to="/" />
+            </Switch>
+          </div>
           {/* <Footer /> */}
         </BrowserRouter>
       </div>

@@ -46,7 +46,7 @@ const getPost = (payload) => {
       } = await axiosInstance.get(`/posts/${payload}`);
       dispatch(postActions.setPost(data));
     } catch (err) {
-      dispatch(postActions.setPost([]));
+      dispatch(postActions.setPost(null));
     } finally {
       dispatch(postActions.setLoading(false));
     }

@@ -31,17 +31,20 @@ const HomePage = () => {
       <div className="row">
         {!loading ? (
           posts.length > 0 ? (
-            posts.map((el) => <BlogComponent el={el} />)
+            posts.map((el) => <BlogComponent el={el} key={el._id} />)
           ) : (
             <h2
-              style={{ color: "white", textShadow: "1px 1.5px rgba(0,0,0,.5)" }}
+              style={{
+                color: "#FF416A",
+                textShadow: "1px 1.5px rgba(0,0,0,.5)",
+              }}
             >
               Empty
             </h2>
           )
         ) : (
           <h2
-            style={{ color: "white", textShadow: "1px 1.5px rgba(0,0,0,.5)" }}
+            style={{ color: "#FF416A", textShadow: "1px 1.5px rgba(0,0,0,.5)" }}
           >
             Loading....
           </h2>

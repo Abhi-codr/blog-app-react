@@ -13,8 +13,8 @@ const Nav = styled.div`
 `;
 
 const NavContainer = styled.div`
-  max-width: 1000px;
-  margin: 0 auto;
+  /* max-width: 1000px;
+  margin: 0 auto; */
   width: 100%;
   display: flex;
   flex-direction: row;
@@ -47,7 +47,7 @@ const NavBrand = styled(Link)`
 const Header = () => {
   return (
     <Nav>
-      <NavContainer>
+      <NavContainer className="container">
         <NavBrand to="/">
           <h2>Blog App</h2>
         </NavBrand>
