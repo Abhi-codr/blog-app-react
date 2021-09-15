@@ -16,7 +16,7 @@ function App() {
   return (
     <Provider store={store}>
       <div style={{ paddingBottom: "20px" }}>
-        <BrowserRouter basename="blog-app-react">
+        <BrowserRouter>
           <ReactNotification />
           <Header />
           <div className="container">
