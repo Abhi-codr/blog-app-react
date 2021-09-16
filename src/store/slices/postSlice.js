@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { store } from "react-notifications-component";
 import axiosInstance from "../../helpers/axiosInstance";
-
+import showNotification from "../../utils/notification";
+import store from "../store";
 const initialState = { posts: [], post: null, loading: false };
 
 const postSlice = createSlice({
@@ -68,8 +68,10 @@ const insertPost = (payload) => {
         { ...payload },
         { headers: { Authorization: `Bearer ${token}` } }
       );
+      showNotification("Success", "New post created successfully", "success");
       dispatch(postActions.setPost(data));
     } catch (err) {
+      showNotification("Oh No!", "Post was not created", "danger");
       dispatch(postActions.setPost(null));
     } finally {
       dispatch(postActions.setLoading(false));
@@ -77,4 +79,29 @@ const insertPost = (payload) => {
   };
 };
 
-export { postSlice, getPosts, getPost, insertPost };
+const updatePost = (payload) => {
+  return async (dispatch) => {
+    const {
+      user: { token },
+    } = store.getState().user;
+    dispatch(postActions.setLoading(true));
+    try {
+      const {
+        data: { data },
+      } = await axiosInstance.put(
+        `/posts/`,
+        { ...payload },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      showNotification("Success", "Post updated successfully", "success");
+      dispatch(postActions.setPost(data));
+    } catch (err) {
+      showNotification("Oh No!", "Post was not updated", "danger");
+      dispatch(postActions.setPost(null));
+    } finally {
+      dispatch(postActions.setLoading(false));
+    }
+  };
+};
+
+export { postSlice, getPosts, getPost, insertPost, updatePost };

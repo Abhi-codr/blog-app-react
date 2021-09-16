@@ -5,8 +5,8 @@ const showNotification = (title, message, type) => {
     title,
     message,
     type,
-    insert: "bottom",
-    container: "bottom-right",
+    insert: "top",
+    container: "top-right",
     animationIn: ["animate__animated", "animate__backInRight"],
     animationOut: ["animate__animated", "animate__fadeOutRight"],
     dismiss: {

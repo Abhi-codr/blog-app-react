@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Button from "../components/styled/Button";
 import Input from "../components/styled/Input";
-import { LoginSchema, RegisterSchema } from "../schemas/userSchema";
+import { RegisterSchema } from "../schemas/userSchema";
 import ErrorText from "../components/styled/ErrorText";
 import { useDispatch } from "react-redux";
 import { registerUser } from "../store/slices/userSlice";
@@ -34,7 +34,7 @@ const RegisterPage = () => {
     mode: "onChange",
   });
 
-  const { registerSuccess } = useSelector((state) => state.user);
+  const { registerSuccess, loading } = useSelector((state) => state.user);
 
   const onSubmit = (val) => {
     dispatch(registerUser(val));
@@ -51,8 +51,7 @@ const RegisterPage = () => {
       style={{
         display: "flex",
         justifyContent: "center",
-        alignItems: "center",
-        height: "80vh",
+        marginTop: "10vh",
       }}
     >
       <RegisterContainer>
@@ -76,6 +75,7 @@ const RegisterPage = () => {
           <ErrorText error={errors["c_password"]} />
           <div style={{ marginTop: "10px" }}></div>
           <Button
+            disabled={loading}
             style={{
               width: "100%",
               display: "block",

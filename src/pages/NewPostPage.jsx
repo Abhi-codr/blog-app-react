@@ -1,11 +1,16 @@
+import { yupResolver } from "@hookform/resolvers/yup";
 import React, { useEffect } from "react";
+import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router";
+import { useHistory } from "react-router";
 import styled from "styled-components";
+import ErrorText from "../components/styled/ErrorText";
 import Button from "../components/styled/Button";
 import Input from "../components/styled/Input";
 import TextArea from "../components/styled/TextArea";
-import { getPost } from "../store/slices/postSlice";
+import { PostSchema } from "../schemas/postSchema";
+import { insertPost } from "../store/slices/postSlice";
+import showNotification from "../utils/notification";
 
 const BlogContainer = styled.div`
   margin-top: 15px;
@@ -24,32 +29,53 @@ const BlogContainer = styled.div`
 
 const NewPostPage = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
   const { loading } = useSelector((state) => state.posts);
-  const param = useParams();
-  const getBlog = async () => {
-    dispatch(getPost(param.id));
+  const { user } = useSelector((state) => state.user);
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(PostSchema),
+    mode: "onChange",
+  });
+
+  const onSubmit = (val) => {
+    dispatch(insertPost(val));
   };
 
   useEffect(() => {
-    getBlog();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    if (user === null) {
+      history.push(`/login?redirect=new-post`);
+      showNotification("Login", "Please login to create new post", "info");
+    }
+  }, [user, history]);
 
   return (
     <div
       style={{
         display: "flex",
         justifyContent: "center",
-        alignItems: "center",
+        marginTop: "5vh",
       }}
     >
       <BlogContainer>
         <h1>New Post</h1>
-        <label>Title</label>
-        <Input />
-        <label>Content</label>
-        <TextArea rows="10"></TextArea>
-        <Button style={{ margin: "auto", display: "block" }}>Post</Button>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <label>Title</label>
+          <Input {...register("title")} autofocus />
+          <ErrorText error={errors["title"]} />
+          <label>Content</label>
+          <TextArea {...register("content")} rows="10"></TextArea>
+          <ErrorText error={errors["content"]} />
+          <Button
+            style={{ margin: "auto", display: "block" }}
+            disabled={loading}
+          >
+            Post
+          </Button>
+        </form>
       </BlogContainer>
     </div>
   );

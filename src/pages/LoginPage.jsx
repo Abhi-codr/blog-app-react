@@ -8,7 +8,7 @@ import { LoginSchema } from "../schemas/userSchema";
 import ErrorText from "../components/styled/ErrorText";
 import { useDispatch } from "react-redux";
 import { loginUser } from "../store/slices/userSlice";
-import { useHistory } from "react-router";
+import { useHistory, useLocation } from "react-router";
 import { useSelector } from "react-redux";
 
 const LoginContainer = styled.div`
@@ -25,6 +25,8 @@ const LoginContainer = styled.div`
 const LoginPage = () => {
   const dispatch = useDispatch();
   const history = useHistory();
+  const search = useLocation().search;
+  const redirect = new URLSearchParams(search).get("redirect");
   const {
     handleSubmit,
     register,
@@ -34,7 +36,7 @@ const LoginPage = () => {
     mode: "onChange",
   });
 
-  const { user } = useSelector((state) => state.user);
+  const { user, loading } = useSelector((state) => state.user);
 
   const onSubmit = (val) => {
     dispatch(loginUser(val));
@@ -43,17 +45,20 @@ const LoginPage = () => {
   useEffect(() => {
     console.log(user);
     if (user !== null) {
-      history.push("/");
+      if (redirect) {
+        history.push(`/${redirect}`);
+      } else {
+        history.push("/");
+      }
     }
-  }, [user, history]);
+  }, [user, history, redirect]);
 
   return (
     <div
       style={{
         display: "flex",
         justifyContent: "center",
-        alignItems: "center",
-        height: "80vh",
+        marginTop: "10vh",
       }}
     >
       <LoginContainer>
@@ -79,8 +84,9 @@ const LoginPage = () => {
               display: "block",
               margin: "auto",
             }}
+            disabled={loading}
           >
-            Login
+            LOGIN
           </Button>
         </form>
       </LoginContainer>
