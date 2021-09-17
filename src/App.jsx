@@ -11,6 +11,7 @@ import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import NewPostPage from "./pages/NewPostPage";
+import EditPostPage from "./pages/EditPage";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
               <Route exact path="/register" component={RegisterPage} />
               <Route exact path="/new-post" component={NewPostPage} />
               <Route exact path="/posts/:id" component={BlogPage} />
+              <Route exact path="/edit-post/:id" component={EditPostPage} />
               <Route exact path="/" component={HomePage} />
               <Redirect exact to="/" />
             </Switch>

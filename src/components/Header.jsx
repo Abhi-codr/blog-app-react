@@ -16,11 +16,10 @@ const Nav = styled.div`
 `;
 
 const NavContainer = styled.div`
-  /* max-width: 1000px;
-  margin: 0 auto; */
   width: 100%;
   display: flex;
   flex-direction: row;
+  align-items: center;
   justify-content: space-between;
 `;
 
@@ -60,6 +59,9 @@ const Header = () => {
           <h2>Blog App</h2>
         </NavBrand>
         <NavLinksContainer>
+          <div style={{ padding: "5px", border: "2px solid #ffffff" }}>
+            Hello, <strong>{user.name}</strong>
+          </div>
           <NavLink to="/">Blogs</NavLink>
           <NavLink to="/new-post">New Post</NavLink>
           {user ? (

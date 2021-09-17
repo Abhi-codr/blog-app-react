@@ -1,6 +1,6 @@
 # Blog App
 
-Deployed App URL : [Blog App](https://blog-app-react-arqv2y7f5-abhi-codr.vercel.app).
+Deployed App URL : [Blog App](https://blog-app-react.vercel.app).
 
 ## Description
 

@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import BlogComponent from "../components/BlogComponent";
+import Spinner from "../components/Spinners";
 import { getPosts } from "../store/slices/postSlice";
 
 const HomePage = () => {
@@ -36,6 +37,8 @@ const HomePage = () => {
             <h2
               style={{
                 color: "#FF416A",
+                textAlign: "center",
+                margin: "auto",
                 textShadow: "1px 1.5px rgba(0,0,0,.5)",
               }}
             >
@@ -43,11 +46,7 @@ const HomePage = () => {
             </h2>
           )
         ) : (
-          <h2
-            style={{ color: "#FF416A", textShadow: "1px 1.5px rgba(0,0,0,.5)" }}
-          >
-            Loading....
-          </h2>
+          <Spinner />
         )}
       </div>
     </>

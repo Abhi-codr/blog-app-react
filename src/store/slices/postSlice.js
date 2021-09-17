@@ -2,7 +2,11 @@ import { createSlice } from "@reduxjs/toolkit";
 import axiosInstance from "../../helpers/axiosInstance";
 import showNotification from "../../utils/notification";
 import store from "../store";
-const initialState = { posts: [], post: null, loading: false };
+const initialState = {
+  posts: [],
+  post: null,
+  loading: false,
+};
 
 const postSlice = createSlice({
   name: "posts",
@@ -89,19 +93,43 @@ const updatePost = (payload) => {
       const {
         data: { data },
       } = await axiosInstance.put(
-        `/posts/`,
-        { ...payload },
+        `/posts/${payload.id}`,
+        { ...payload.data },
         { headers: { Authorization: `Bearer ${token}` } }
       );
       showNotification("Success", "Post updated successfully", "success");
       dispatch(postActions.setPost(data));
+      return true;
     } catch (err) {
       showNotification("Oh No!", "Post was not updated", "danger");
       dispatch(postActions.setPost(null));
+      return false;
     } finally {
       dispatch(postActions.setLoading(false));
     }
   };
 };
 
-export { postSlice, getPosts, getPost, insertPost, updatePost };
+const deletePost = (payload) => {
+  return async (dispatch) => {
+    const {
+      user: { token },
+    } = store.getState().user;
+    dispatch(postActions.setLoading(true));
+    try {
+      await axiosInstance.delete(`/posts/${payload.id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      showNotification("Success", "Post deleted successfully", "success");
+      dispatch(postActions.setUpdateSuccess(true));
+      return true;
+    } catch (err) {
+      showNotification("Oh No!", "Post was not deleted", "danger");
+      return false;
+    } finally {
+      dispatch(postActions.setLoading(false));
+    }
+  };
+};
+
+export { postSlice, getPosts, getPost, insertPost, updatePost, deletePost };
