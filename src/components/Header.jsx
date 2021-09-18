@@ -59,13 +59,15 @@ const Header = () => {
           <h2>Blog App</h2>
         </NavBrand>
         <NavLinksContainer>
-          <div style={{ padding: "5px", border: "2px solid #ffffff" }}>
-            Hello, <strong>{user.name}</strong>
-          </div>
           <NavLink to="/">Blogs</NavLink>
           <NavLink to="/new-post">New Post</NavLink>
           {user ? (
-            <Button onClick={onClick}>Logout</Button>
+            <>
+              <Button onClick={onClick}>Logout</Button>
+              <div style={{ padding: "5px", border: "2px solid #ffffff" }}>
+                Hello, <strong>{user.name}</strong>
+              </div>
+            </>
           ) : (
             <>
               <NavLink to="/login">Login</NavLink>
