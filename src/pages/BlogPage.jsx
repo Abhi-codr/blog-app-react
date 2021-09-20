@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router";
+import { useHistory, useParams } from "react-router";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import Spinner from "../components/Spinners";
@@ -21,6 +21,7 @@ const BlogPage = () => {
   const { post, loading } = useSelector((state) => state.posts);
   const { user } = useSelector((state) => state.user);
   const param = useParams();
+  const history = useHistory();
 
   useEffect(() => {
     dispatch(getPost(param.id));
@@ -28,7 +29,9 @@ const BlogPage = () => {
   }, []);
 
   const handleDelete = () => {
-    dispatch(deletePost(param.id));
+    console.log(param.id);
+    const isSuccess = dispatch(deletePost(param.id));
+    if (isSuccess) setTimeout(() => history.push("/"), 100);
   };
 
   return (

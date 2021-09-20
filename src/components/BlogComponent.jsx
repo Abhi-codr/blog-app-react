@@ -7,7 +7,7 @@ const DEFAULT_IMG =
 
 const BlogComponent = ({ el }) => {
   return (
-    <div className="col-lg-4 col-md-6">
+    <div style={{ zIndex: 0 }} className="col-lg-4 col-md-6">
       <LinkContainer to={`/posts/${el._id}`}>
         <div
           style={{

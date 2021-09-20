@@ -5,13 +5,13 @@ import ReactNotification from "react-notifications-component";
 import "./App.css";
 import "react-notifications-component/dist/theme.css";
 import "animate.css";
-import Header from "./components/Header";
 import BlogPage from "./pages/BlogPage";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import NewPostPage from "./pages/NewPostPage";
 import EditPostPage from "./pages/EditPage";
+import NavBar from "./components/Navbar";
 
 function App() {
   return (
@@ -19,7 +19,7 @@ function App() {
       <div style={{ paddingBottom: "20px" }}>
         <BrowserRouter>
           <ReactNotification />
-          <Header />
+          <NavBar />
           <div className="container">
             <Switch>
               <Route exact path="/login" component={LoginPage} />

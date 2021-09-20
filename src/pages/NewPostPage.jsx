@@ -42,7 +42,8 @@ const NewPostPage = () => {
   });
 
   const onSubmit = (val) => {
-    dispatch(insertPost(val));
+    const isSuccess = dispatch(insertPost(val));
+    if (isSuccess) setTimeout(() => history.push("/"), 100);
   };
 
   useEffect(() => {

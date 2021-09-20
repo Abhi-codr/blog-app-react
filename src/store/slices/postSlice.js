@@ -18,6 +18,9 @@ const postSlice = createSlice({
     setPosts(state, action) {
       state.posts = action.payload;
     },
+    addPost(state, action) {
+      state.posts.push(action.payload);
+    },
     setPost(state, action) {
       state.post = action.payload;
     },
@@ -74,9 +77,12 @@ const insertPost = (payload) => {
       );
       showNotification("Success", "New post created successfully", "success");
       dispatch(postActions.setPost(data));
+      postActions.addPost(data);
+      return true;
     } catch (err) {
       showNotification("Oh No!", "Post was not created", "danger");
       dispatch(postActions.setPost(null));
+      return false;
     } finally {
       dispatch(postActions.setLoading(false));
     }
@@ -117,13 +123,13 @@ const deletePost = (payload) => {
     } = store.getState().user;
     dispatch(postActions.setLoading(true));
     try {
-      await axiosInstance.delete(`/posts/${payload.id}`, {
+      await axiosInstance.delete(`/posts/${payload}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       showNotification("Success", "Post deleted successfully", "success");
-      dispatch(postActions.setUpdateSuccess(true));
       return true;
     } catch (err) {
+      console.log(err);
       showNotification("Oh No!", "Post was not deleted", "danger");
       return false;
     } finally {

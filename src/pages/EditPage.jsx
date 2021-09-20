@@ -47,7 +47,8 @@ const EditPostPage = () => {
   });
 
   const onSubmit = (val) => {
-    dispatch(updatePost({ data: val, id: param.id }));
+    const isSuccess = dispatch(updatePost({ data: val, id: param.id }));
+    if (isSuccess) setTimeout(() => history.push("/"), 100);
   };
 
   useEffect(() => {
