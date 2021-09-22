@@ -1,17 +1,21 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import Button from "./styled/Button";
 
 const Item = styled.li``;
 
-const NavLink = styled(Link)`
+const NavBarLink = styled(NavLink)`
   text-decoration: none;
   color: white;
   padding: 0 10px 0 10px;
   font-size: 1.1em;
   transition: 0.1s ease;
   &:hover {
+    font-weight: bold;
+    font-size: 1.2em;
+  }
+  &.${(props) => props.activeClassName} {
     font-weight: bold;
     font-size: 1.2em;
   }
@@ -23,14 +27,27 @@ const Centered = styled.div`
   align-content: ${(props) => !props.isOverlay && "space-space-around"};
 `;
 
-const NavbarItems = ({ onClick, user, isOverlay = false }) => {
+const NavbarItems = ({ onClick, user, isOverlay = false, toggleNav }) => {
   return (
     <>
       <Item>
-        <NavLink to="/">Blogs</NavLink>
+        <NavBarLink
+          onClick={() => toggleNav(false)}
+          activeClassName="active"
+          to="/"
+          exact={true}
+        >
+          Blogs
+        </NavBarLink>
       </Item>
       <Item>
-        <NavLink to="/new-post">New Post</NavLink>
+        <NavBarLink
+          onClick={() => toggleNav(false)}
+          activeClassName="active"
+          to="/new-post"
+        >
+          New Post
+        </NavBarLink>
       </Item>
       {user ? (
         <Centered isOverlay={isOverlay}>
@@ -53,10 +70,22 @@ const NavbarItems = ({ onClick, user, isOverlay = false }) => {
       ) : (
         <>
           <Item>
-            <NavLink to="/login">Login</NavLink>
+            <NavBarLink
+              onClick={() => toggleNav(false)}
+              activeClassName="active"
+              to="/login"
+            >
+              Login
+            </NavBarLink>
           </Item>
           <Item>
-            <NavLink to="/register">Register</NavLink>
+            <NavBarLink
+              onClick={() => toggleNav(false)}
+              activeClassName="active"
+              to="/register"
+            >
+              Register
+            </NavBarLink>
           </Item>
         </>
       )}

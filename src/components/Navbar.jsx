@@ -116,7 +116,7 @@ const NavBar = () => {
             <h2>Blog App</h2>
           </NavBrand>
           <Menu>
-            <NavbarItems user={user} onClick={onClick} />
+            <NavbarItems user={user} onClick={onClick} toggleNav={toggleNav} />
           </Menu>
           <NavIcon onClick={() => toggleNav(!toggle)}>
             <Line open={toggle} />
@@ -127,7 +127,12 @@ const NavBar = () => {
       </Nav>
       <Overlay open={toggle}>
         <OverlayMenu open={toggle}>
-          <NavbarItems user={user} onClick={onClick} isOverlay={true} />
+          <NavbarItems
+            user={user}
+            onClick={onClick}
+            toggleNav={toggleNav}
+            isOverlay={true}
+          />
         </OverlayMenu>
       </Overlay>
     </>

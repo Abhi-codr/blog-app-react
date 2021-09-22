@@ -17,7 +17,7 @@ const BlogComponent = ({ el }) => {
           }}
         >
           <img
-            src="https://static-cse.canva.com/blob/140259/ComposeStunningImags7.jpg"
+            src={el.imageUrl || ""}
             alt="Loading...."
             onError={(e) => {
               e.target.src = DEFAULT_IMG;

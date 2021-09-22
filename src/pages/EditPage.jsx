@@ -6,11 +6,11 @@ import { useHistory, useParams } from "react-router";
 import styled from "styled-components";
 import ErrorText from "../components/styled/ErrorText";
 import Button from "../components/styled/Button";
-import Input from "../components/styled/Input";
 import TextArea from "../components/styled/TextArea";
 import { PostSchema } from "../schemas/postSchema";
 import { getPost, updatePost } from "../store/slices/postSlice";
 import showNotification from "../utils/notification";
+import InputGroup from "../components/InputGroup";
 
 const BlogContainer = styled.div`
   margin-top: 15px;
@@ -48,7 +48,7 @@ const EditPostPage = () => {
 
   const onSubmit = (val) => {
     const isSuccess = dispatch(updatePost({ data: val, id: param.id }));
-    if (isSuccess) setTimeout(() => history.push("/"), 100);
+    if (isSuccess) setTimeout(() => history.push("/"), 500);
   };
 
   useEffect(() => {
@@ -66,6 +66,7 @@ const EditPostPage = () => {
     if (post) {
       setValue("title", post.title.toUpperCase());
       setValue("content", post.content);
+      setValue("imageUrl", post.imageUrl || "");
     }
   }, [post, setValue]);
 
@@ -80,9 +81,18 @@ const EditPostPage = () => {
       <BlogContainer>
         <h1>Edit Post</h1>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <label>Title</label>
-          <Input {...register("title")} autofocus />
-          <ErrorText error={errors["title"]} />
+          <InputGroup
+            register={register}
+            errors={errors}
+            name="title"
+            label="Title"
+          />
+          <InputGroup
+            register={register}
+            errors={errors}
+            name="imageUrl"
+            label="Image URL"
+          />
           <label>Content</label>
           <TextArea {...register("content")} rows="10"></TextArea>
           <ErrorText error={errors["content"]} />

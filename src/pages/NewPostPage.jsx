@@ -6,11 +6,11 @@ import { useHistory } from "react-router";
 import styled from "styled-components";
 import ErrorText from "../components/styled/ErrorText";
 import Button from "../components/styled/Button";
-import Input from "../components/styled/Input";
 import TextArea from "../components/styled/TextArea";
 import { PostSchema } from "../schemas/postSchema";
 import { insertPost } from "../store/slices/postSlice";
 import showNotification from "../utils/notification";
+import InputGroup from "../components/InputGroup";
 
 const BlogContainer = styled.div`
   margin-top: 15px;
@@ -43,7 +43,7 @@ const NewPostPage = () => {
 
   const onSubmit = (val) => {
     const isSuccess = dispatch(insertPost(val));
-    if (isSuccess) setTimeout(() => history.push("/"), 100);
+    if (isSuccess) setTimeout(() => history.push("/"), 500);
   };
 
   useEffect(() => {
@@ -64,9 +64,18 @@ const NewPostPage = () => {
       <BlogContainer>
         <h1>New Post</h1>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <label>Title</label>
-          <Input {...register("title")} autofocus />
-          <ErrorText error={errors["title"]} />
+          <InputGroup
+            register={register}
+            errors={errors}
+            name="title"
+            label="Title"
+          />
+          <InputGroup
+            register={register}
+            errors={errors}
+            name="imageUrl"
+            label="Image URL"
+          />
           <label>Content</label>
           <TextArea {...register("content")} rows="10"></TextArea>
           <ErrorText error={errors["content"]} />

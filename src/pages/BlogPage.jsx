@@ -7,6 +7,9 @@ import Spinner from "../components/Spinners";
 import Button from "../components/styled/Button";
 import { deletePost, getPost } from "../store/slices/postSlice";
 
+const DEFAULT_IMG =
+  "https://c4.wallpaperflare.com/wallpaper/826/524/865/3-316-16-9-aspect-ratio-s-sfw-wallpaper-preview.jpg";
+
 const BlogContainer = styled.div`
   margin-top: 15px;
   border-radius: 7px;
@@ -31,7 +34,7 @@ const BlogPage = () => {
   const handleDelete = () => {
     console.log(param.id);
     const isSuccess = dispatch(deletePost(param.id));
-    if (isSuccess) setTimeout(() => history.push("/"), 100);
+    if (isSuccess) setTimeout(() => history.push("/"), 500);
   };
 
   return (
@@ -62,8 +65,11 @@ const BlogPage = () => {
               </>
             )}
             <img
-              src="https://c4.wallpaperflare.com/wallpaper/826/524/865/3-316-16-9-aspect-ratio-s-sfw-wallpaper-preview.jpg"
+              src={post.imageUrl || ""}
               alt="Loading...."
+              onError={(e) => {
+                e.target.src = DEFAULT_IMG;
+              }}
               style={{ width: "100%", marginTop: "10px" }}
             />
             <p>{post.content}</p>
