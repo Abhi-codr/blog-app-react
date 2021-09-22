@@ -1,5 +1,7 @@
 # Blog App
 
+Deployed URL: [BlogApp](https://blog-app-react.vercel.app/)
+
 ## Screenshots
 
 Home Page
